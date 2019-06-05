@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "674860770265",
+    "firebase_url": "https://usbdevicefortrn.firebaseio.com",
+    "project_id": "usbdevicefortrn",
+    "storage_bucket": "usbdevicefortrn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:674860770265:android:3ad8c1da3cf8fe67",
+        "android_client_info": {
+          "package_name": "com.example.usbdevicefortrn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "674860770265-c8gdkg2gktu4om6qdrnvdo6bj858bit0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.usbdevicefortrn",
+            "certificate_hash": "e32d31eb177adc744900b33b02471360d06efa7f"
+          }
+        },
+        {
+          "client_id": "674860770265-d6kheiaau955lvbdjgvvn5nts1j32oop.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-pTnPMwG4SpY8JHF7yJvkan4gAwVo8oE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "674860770265-d6kheiaau955lvbdjgvvn5nts1j32oop.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
