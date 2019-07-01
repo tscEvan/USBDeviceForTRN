@@ -1,6 +1,18 @@
 <resources>
     <string name="app_name">USBDeviceForTRN</string>
+
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_store">Store</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_menu">Menu</string>
+
+    <!--device type-->
+    <integer name="device_usb">1</integer>
+    <integer name="device_door">2</integer>
+    <!---->
+    <!--permission-->
+    <integer name="permission_master">1</integer>
+    <integer name="permission_client">2</integer>
+    <!---->
+
 </resources>

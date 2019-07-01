@@ -1,4 +1,4 @@
-package com.example.usbdevicefortrn.Chaos;
+package com.example.usbdevicefortrn.chaos;
 
 import android.util.Log;
 

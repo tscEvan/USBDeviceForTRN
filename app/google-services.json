@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "674860770265-co24titg4nu2hk4evd3bhc17geqa070m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.usbdevicefortrn",
+            "certificate_hash": "a9707c00187564f95ce494c7f647f218be70edab"
+          }
+        },
+        {
           "client_id": "674860770265-c8gdkg2gktu4om6qdrnvdo6bj858bit0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
