@@ -9,14 +9,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.example.usbdevicefortrn.fragmentActivity.MenuFragment;
 import com.example.usbdevicefortrn.fragmentActivity.OwnFragment;
 import com.example.usbdevicefortrn.fragmentActivity.StoreFragment;
-import com.example.usbdevicefortrn.ownDevice.OwnDeviceBean;
+import com.example.usbdevicefortrn.ownDevice.DevicesKeyBaseBean;
+import com.example.usbdevicefortrn.store.ProductBean;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
     public static final int LOGIN_CHECK = 5;
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //recheck user auth
         if (auth.getCurrentUser() ==null) {
             Intent loginPage = new Intent(MainActivity.this, LoginActivity.class);
@@ -52,12 +57,9 @@ public class MainActivity extends AppCompatActivity {
             ownFragment = new OwnFragment();
             storeFragment = new StoreFragment();
             menuFragment = new MenuFragment();
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,ownFragment).commit();
+            navView.setSelectedItemId(R.id.navigation_home);
         }
-
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navView.setSelectedItemId(R.id.navigation_home);
+//        addTestData();
     }
 
     @Override
@@ -65,7 +67,20 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
     }
 
-    @Override
+
+    private void addTestData() {
+        CollectionReference products = FirebaseFirestore.getInstance().collection("products").document("forSell").collection("usb");
+        CollectionReference keyBase = FirebaseFirestore.getInstance().collection("keyBase").document("usb").collection("info");
+//        CollectionReference history = FirebaseFirestore.getInstance().collection("keyBase").document("usb").collection("history");
+        for (int i = 0; i < 3; i++) {
+            String productKey = FirebaseFirestore.getInstance().collection("pkey").document().getId();
+            String deviceId = FirebaseFirestore.getInstance().collection("deviceId").document().getId();
+            products.add(new ProductBean(false, productKey, deviceId));
+            keyBase.add(new DevicesKeyBaseBean(deviceId, "1",null, Arrays.asList(1.234, 12.34, 123.4)));
+//            history.add(new HIstoryBean(FieldValue.serverTimestamp(),));
+        }
+    }
+        @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){

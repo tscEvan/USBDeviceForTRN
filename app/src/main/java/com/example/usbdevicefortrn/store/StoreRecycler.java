@@ -1,6 +1,7 @@
 package com.example.usbdevicefortrn.store;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
@@ -24,27 +25,21 @@ import java.util.ArrayList;
 
 import javax.annotation.Nullable;
 
-public class StoreRecyclerNews {
-    private static final String TAG = StoreRecyclerNews.class.getSimpleName();
+public class StoreRecycler {
+    private static final String TAG = StoreRecycler.class.getSimpleName();
     Context context;
     RecyclerView recyclerView;
     ArrayList<StoreForShowBean> arrayList = new ArrayList<>();
 
-    public StoreRecyclerNews(Context context, RecyclerView recyclerView) {
+    public StoreRecycler(Context context, RecyclerView recyclerView, String firebasePath) {
         this.context = context;
         this.recyclerView = recyclerView;
+        LinearSnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(this.recyclerView);
 //
-//        FirebaseFirestore.getInstance().collection("products").document("forSell").collection("usb").add(new StoreForSellBean(false,"123","123"));
-//        FirebaseFirestore.getInstance().collection("products").document("forSell").collection("usb").add(new StoreForSellBean(false,"1234","1234"));
-//        FirebaseFirestore.getInstance().collection("products").document("forSell").collection("usb").add(new StoreForSellBean(false,"12345","12345"));
-//
-//        FirebaseFirestore.getInstance().collection("products").document("forShow").collection("news").add(new StoreForShowBean("混沌加密隨身碟","展示文字","https://firebasestorage.googleapis.com/v0/b/usbdevicefortrn.appspot.com/o/image_show_usb_v0.jpg?alt=media&token=ea1ffb73-354e-46f9-ba4c-b6f56008073c"));
-//        FirebaseFirestore.getInstance().collection("products").document("forShow").collection("news").add(new StoreForShowBean("混沌電子門鎖","1234","https://firebasestorage.googleapis.com/v0/b/usbdevicefortrn.appspot.com/o/image_show_usb_v1.jpg?alt=media&token=f2d4ad58-ac74-4cd6-8837-ddce360ca3d7"));
-//        FirebaseFirestore.getInstance().collection("products").document("forShow").collection("news").add(new StoreForShowBean("Modbus微電網","12345","https://firebasestorage.googleapis.com/v0/b/usbdevicefortrn.appspot.com/o/image_show_usb_v2.jpg?alt=media&token=17e91fec-60fb-4439-9469-fde952c2fd7f"));
-
         FirebaseFirestore.getInstance().collection("products")
                 .document("forShow")
-                .collection("usb")
+                .collection(firebasePath)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -65,8 +60,6 @@ public class StoreRecyclerNews {
         recyclerView.setLayoutManager(new GridLayoutManager(context,2, GridLayout.HORIZONTAL,false));
         StoreNewsViewAdapter adapter = new StoreNewsViewAdapter();
         recyclerView.setAdapter(adapter);
-        LinearSnapHelper snapHelper = new LinearSnapHelper();
-        snapHelper.attachToRecyclerView(recyclerView);
     }
 
     private class StoreNewsViewAdapter extends RecyclerView.Adapter<StoreNewsViewAdapter.StoreNewsViewHolder> {
@@ -78,12 +71,18 @@ public class StoreRecyclerNews {
         }
 
         @Override
-        public void onBindViewHolder(@NonNull StoreNewsViewHolder storeViewHolder, int i) {
-            StoreForShowBean data = arrayList.get(i);
+        public void onBindViewHolder(@NonNull final StoreNewsViewHolder storeViewHolder, int i) {
+            final StoreForShowBean data = arrayList.get(i);
             storeViewHolder.txTitle.setText(data.getTitle());
             storeViewHolder.txDepiction.setText(data.getDepiction());
-            Picasso.get().load(data.getImgUrl()).placeholder(R.drawable.loading).into(storeViewHolder.image);
-//            storeViewHolder.image.setImageResource();
+            new Handler().post(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        Picasso.get().load(data.getImgUrl()).placeholder(R.drawable.loading).into(storeViewHolder.image);
+                    }
+                }
+            );
         }
 
         @Override

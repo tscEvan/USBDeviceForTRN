@@ -38,7 +38,19 @@ public class TRNFunction {
         //大數運算取次方後取餘數
 //        System.out.println(new BigInteger("2").modPow(new BigInteger("9"), modVal));
         //
-        System.out.println(TrueNumberFunction(new BigInteger("3"), 255, 255, new BigInteger("255")));
+//        System.out.println(0B11110000);
+        byte[] bytes = doubleToByteArray(2.53);
+        System.out.println(bytes[0]);
+        System.out.println(bytes[1]);
+        System.out.println(bytes[2]);
+        System.out.println(bytes[3]);
+        System.out.println(bytes[4] & 0xff);
+        System.out.println(bytes[5]);
+        System.out.println(bytes[6]);
+        System.out.println(bytes[7]);
+//        System.out.println(TrueNumberFunction(3, 255, 255, 255));
+//        System.out.println(TrueNumberFunction(3, 25, 212, 23));
+//        System.out.println(TrueNumberFunction(3, 3, 3, 3));
 
     }
 
@@ -55,14 +67,14 @@ public class TRNFunction {
         BigInteger bigInteger = new BigInteger(String.valueOf(base));
         return bigInteger.pow(pow);
     }
-    public static BigInteger TrueNumberFunction(BigInteger prime_g, int TNF_x, int TNF_r, BigInteger TNF_Seed) {
-        BigInteger y = prime_g.pow(TNF_x).mod(modVal);// y=g^x mod p
-        BigInteger result = y.pow(TNF_r).mod(modVal).multiply(TNF_Seed.mod(modVal)).mod(modVal);// ( Seed * y^r) mod p = ((Seed mod p) * (y^r mod p) ) mod p
-        return result;
+    public static int TrueNumberFunction(int prime_g, int TNF_x, int TNF_r, int TNF_Seed) {
+        BigInteger y = new BigInteger(String.valueOf(prime_g)).pow(TNF_x).mod(modVal);// y=g^x mod p
+        BigInteger result = y.pow(TNF_r).mod(modVal).multiply(new BigInteger(String.valueOf(TNF_Seed)).mod(modVal)).mod(modVal);// ( Seed * y^r) mod p = ((Seed mod p) * (y^r mod p) ) mod p
+        return result.intValue();
     }
 
     // IEEE754 conversion
-    public static byte[] floatToByteArray(double data){
+    public static byte[] doubleToByteArray(double data){
         return ByteBuffer.allocate(8).putDouble(data).array();
     }
 

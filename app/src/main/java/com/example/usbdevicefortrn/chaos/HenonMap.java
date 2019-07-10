@@ -5,6 +5,8 @@ import android.util.Log;
 import java.math.BigDecimal;
 
 public class HenonMap {
+    private HenonMap henonMap;
+
     double g1, g2, g3, g4;
     double h1, h2;
     double j1, j2;
@@ -19,8 +21,19 @@ public class HenonMap {
     double y1s, y2s, y3s;
     int testTime = 0;
 
+    public HenonMap() {
+    }
+
     //set inti
-    public void inti() {
+    public HenonMap getInstance() {
+        if (henonMap == null) {
+            henonMap = new HenonMap();
+            henonMap.inti();
+        }
+        return henonMap;
+    }
+
+    private void inti() {
         ax1 = 1;
         ax2 = 1;
         ax3 = 1;
@@ -30,11 +43,11 @@ public class HenonMap {
         c1 = (double) -0.5;
         c2 = (double) 0.06;
         A = (double) 0.1;
-        x1 = -0.1f;
-        x2 = 0.4f;
-        x3 = -0.3f;
-        y1 = -0.8f;
-        y2 = 0.8f;
+        x1 = -0.1;
+        x2 = 0.4;
+        x3 = -0.3;
+        y1 = -0.8;
+        y2 = 0.8;
         y3 = 2;
     }
 

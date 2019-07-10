@@ -1,14 +1,14 @@
 package com.example.usbdevicefortrn.store;
 
-public class StoreForSellBean {
+public class ProductBean {
     Boolean onUse;
     String productKey;
     String deviceId;
 
-    public StoreForSellBean() {
+    public ProductBean() {
     }
 
-    public StoreForSellBean(Boolean onUse, String productKey, String deviceId) {
+    public ProductBean(Boolean onUse, String productKey, String deviceId) {
         this.onUse = onUse;
         this.productKey = productKey;
         this.deviceId = deviceId;

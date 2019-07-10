@@ -1,8 +1,11 @@
 package com.example.usbdevicefortrn.menu;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.MenuAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.usbdevicefortrn.AddDeviceActivity;
 import com.example.usbdevicefortrn.R;
 import com.example.usbdevicefortrn.ownDevice.OwnDeviceBean;
 import com.google.firebase.auth.FirebaseAuth;
@@ -62,7 +66,9 @@ public class MenuRecycler {
                 public void onClick(View v) {
                     switch (data.image) {
                         case R.drawable.link:
-                            FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getUid()).collection("own").add(new OwnDeviceBean(menuViewHolder.itemView.getContext().getResources().getInteger(R.integer.device_usb),"test","usb",menuViewHolder.itemView.getContext().getResources().getInteger(R.integer.permission_master)));
+                            context.startActivity(new Intent(context, AddDeviceActivity.class));
+                            break;
+                        case R.drawable.share:
                             break;
                         case R.drawable.logout:
                             FirebaseAuth.getInstance().signOut();

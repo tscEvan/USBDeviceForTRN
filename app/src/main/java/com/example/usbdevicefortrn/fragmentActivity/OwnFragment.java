@@ -28,14 +28,12 @@ public class OwnFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_main);
-        OwnDeviceRecyclerFunction recyclerFunction = new OwnDeviceRecyclerFunction(this.getActivity(), recyclerView, FirebaseAuth.getInstance().getUid());
+        final RecyclerView recyclerView = view.findViewById(R.id.recycler_main);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                OwnDeviceRecyclerFunction recyclerFunction = new OwnDeviceRecyclerFunction(OwnFragment.this.getActivity(), recyclerView, FirebaseAuth.getInstance().getUid());
+            }
+        }).start();
     }
-
-//    public static OwnFragment getInstance() {
-//        if (instance == null) {
-//            instance = new OwnFragment();
-//        }
-//        return instance;
-//    }
 }
