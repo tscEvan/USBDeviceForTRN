@@ -18,12 +18,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.usbdevicefortrn.userInformation.UserInformationBean;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -52,6 +54,8 @@ public class UserInfoActivity extends AppCompatActivity {
     private TextView txEmail;
     private ImageView myQRCode;
     private String uid;
+    private ImageButton editMyName;
+    private ImageButton editMyEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +70,10 @@ public class UserInfoActivity extends AppCompatActivity {
         setMyShareQrcode(uid);
 
 
+    }
+
+    public void unableFun(View view){
+        Snackbar.make(view,"該功能尚未開放",Snackbar.LENGTH_LONG).show();
     }
 
     private void findView() {
@@ -191,7 +199,6 @@ public class UserInfoActivity extends AppCompatActivity {
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
