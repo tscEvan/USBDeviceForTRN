@@ -108,13 +108,14 @@ public class ShareDeviceRecyclerFunction {
             shareDeviceViewHolder.infoLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //need add something check repeat share function
                     final AlertDialog.Builder checkDialog = new AlertDialog.Builder(context);
                     checkDialog.setMessage("確定要將「" + data.getDeviceName() + "」裝置使用權限分享給 " + shareToName + " 嗎?")
                             .setPositiveButton("確定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     OwnDeviceBean newShareData = data;
-                                    newShareData.setPermission(R.integer.permission_client);
+                                    newShareData.setPermission(context.getResources().getInteger(R.integer.permission_client));
                                     FirebaseFirestore.getInstance()
                                             .collection("users")
                                             .document(shareToUid)

@@ -26,7 +26,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/search_by_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -40,16 +40,16 @@
         app:layout_constraintTop_toBottomOf="@+id/inputLayoutSearch" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/search_by_qrcode"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="#82B1FF"
         android:onClick="qrcode"
         android:text="QR Code搜尋"
-        app:layout_constraintEnd_toEndOf="@+id/button2"
-        app:layout_constraintStart_toStartOf="@+id/button2"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintEnd_toEndOf="@+id/search_by_email"
+        app:layout_constraintStart_toStartOf="@+id/search_by_email"
+        app:layout_constraintTop_toBottomOf="@+id/search_by_email" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/search_result_layout"
@@ -59,7 +59,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3">
+        app:layout_constraintTop_toBottomOf="@+id/search_by_qrcode">
 
         <ImageView
             android:id="@+id/image_user_photo"
@@ -71,7 +71,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_popup_sync" />
+            app:srcCompat="@drawable/ic_person_black_24dp" />
 
         <LinearLayout
             android:id="@+id/linearLayout2"

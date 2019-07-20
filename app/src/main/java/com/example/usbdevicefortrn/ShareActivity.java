@@ -7,6 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -74,6 +75,7 @@ public class ShareActivity extends AppCompatActivity {
             inputLayout.setError("請輸入正確的Email");
         } else {
             inputLayout.setError(null);
+            // find user
             final LoadingDialog loadingDialog = new LoadingDialog(this, R.style.LoadingDialog, "搜尋中請稍後", false);
             loadingDialog.show();
             FirebaseFirestore.getInstance().collection("users").whereEqualTo("email", edEmail).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -81,38 +83,9 @@ public class ShareActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                            final UserInformationBean searchUser = documentSnapshot.toObject(UserInformationBean.class);
-                            try {
-                                final File file = File.createTempFile("images", "jpg");
-                                FirebaseStorage storage = FirebaseStorage.getInstance();
-                                StorageReference storageRef = storage.getReferenceFromUrl("gs://usbdevicefortrn.appspot.com/users").child(searchUser.getUid() + "/mugshot.jpg");
-                                storageRef.getFile(file).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
-                                        if (task.isSuccessful()) {
-                                            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-                                            userPhoto.setImageBitmap(bitmap);
-                                        }
-                                        loadingDialog.dismiss();
-                                        shareToName.setText(searchUser.getNickname());
-                                        searchResultLayout.setVisibility(View.VISIBLE);
-                                        Button btCheck = findViewById(R.id.search_check);
-                                        btCheck.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-                                                AlertDialog.Builder alertDialog = new AlertDialog.Builder(ShareActivity.this);
-                                                LayoutInflater layoutInflater = LayoutInflater.from(ShareActivity.this);
-                                                View addNewView = layoutInflater.inflate(R.layout.recycler_view_layout, null);
-                                                RecyclerView recyclerView = addNewView.findViewById(R.id.recycler);
-                                                new ShareDeviceRecyclerFunction(ShareActivity.this,recyclerView,uid,searchUser.getUid(),searchUser.getNickname());
-                                                alertDialog.setView(addNewView).show();
-                                            }
-                                        });
-                                    }
-                                });
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                            UserInformationBean searchUser = documentSnapshot.toObject(UserInformationBean.class);
+                            //find user
+                            findUser(searchUser, loadingDialog);
                         }
                     } else {
                         loadingDialog.dismiss();
@@ -123,15 +96,75 @@ public class ShareActivity extends AppCompatActivity {
     }
 
     public void qrcode(View view) {
-
+        Intent i = new Intent("la.droid.qr.scan");    //使用QRDroid的掃描功能
+        i.putExtra("la.droid.qr.complete", true);   //完整回傳，不截掉scheme
+        try {
+            //開啟 QRDroid App 的掃描功能，等待 call back onActivityResult()
+            startActivityForResult(i, 0);
+        } catch (ActivityNotFoundException ex) {
+            //若沒安裝 QRDroid，則開啟 Google Play商店，並顯示 QRDroid App
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=la.droid.qr"));
+            startActivity(intent);
+        }
     }
 
+    private void findUser(final UserInformationBean searchUser, final LoadingDialog loadingDialog) {
+        try {
+            final File file = File.createTempFile("images", "jpg");
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://usbdevicefortrn.appspot.com/users").child(searchUser.getUid() + "/mugshot.jpg");
+            storageRef.getFile(file).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                        userPhoto.setImageBitmap(bitmap);
+                    }
+                    loadingDialog.dismiss();
+                    shareToName.setText(searchUser.getNickname());
+                    searchResultLayout.setVisibility(View.VISIBLE);
+                    Button btCheck = findViewById(R.id.search_check);
+                    btCheck.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            AlertDialog.Builder alertDialog = new AlertDialog.Builder(ShareActivity.this);
+                            LayoutInflater layoutInflater = LayoutInflater.from(ShareActivity.this);
+                            View addNewView = layoutInflater.inflate(R.layout.recycler_view_layout, null);
+                            RecyclerView recyclerView = addNewView.findViewById(R.id.recycler);
+                            new ShareDeviceRecyclerFunction(ShareActivity.this,recyclerView,uid,searchUser.getUid(),searchUser.getNickname());
+                            alertDialog.setView(addNewView).show();
+                        }
+                    });
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (0 == requestCode && null != data && data.getExtras() != null) {
-            final String result = data.getExtras().getString("la.droid.qr.result");
+            final LoadingDialog loadingDialog = new LoadingDialog(this, R.style.LoadingDialog, "搜尋中請稍後", false);
+            loadingDialog.show();
+            String result = data.getExtras().getString("la.droid.qr.result");
+            FirebaseFirestore.getInstance().collection("users").whereEqualTo(uid,result)
+                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                            UserInformationBean searchUser = documentSnapshot.toObject(UserInformationBean.class);
+                            //find user
+                            findUser(searchUser, loadingDialog);
+                        }
+                        loadingDialog.dismiss();
+                    }else {
+                        loadingDialog.dismiss();
+                    }
+                }
+            });
         }
     }
 

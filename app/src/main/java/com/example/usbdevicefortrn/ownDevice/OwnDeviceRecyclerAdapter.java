@@ -3,9 +3,13 @@ package com.example.usbdevicefortrn.ownDevice;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.example.usbdevicefortrn.ShareActivity;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +75,7 @@ public class OwnDeviceRecyclerAdapter extends RecyclerView.Adapter<OwnDeviceRecy
             @Override
             public void onClick(View v) {
                 if (arrayList.get(i).getPermission() == v.getResources().getInteger(R.integer.permission_master)) {
-                    new AlertDialog.Builder(context).setMessage("share").setPositiveButton("OK", null).show();
+                    context.startActivity(new Intent(context, ShareActivity.class));
                 } else {
                     new AlertDialog.Builder(context).setTitle("權限不足").setMessage("只有裝置擁有者才能使用分享功能").setPositiveButton("OK", null).show();
                 }
