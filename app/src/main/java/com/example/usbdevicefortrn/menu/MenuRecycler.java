@@ -2,13 +2,13 @@ package com.example.usbdevicefortrn.menu;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.IntegerRes;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.menu.MenuAdapter;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +17,9 @@ import android.widget.TextView;
 
 import com.example.usbdevicefortrn.AddDeviceActivity;
 import com.example.usbdevicefortrn.R;
-import com.example.usbdevicefortrn.ownDevice.OwnDeviceBean;
+import com.example.usbdevicefortrn.ShareActivity;
+import com.example.usbdevicefortrn.UserInfoActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -65,10 +65,14 @@ public class MenuRecycler {
                 @Override
                 public void onClick(View v) {
                     switch (data.image) {
+                        case R.drawable.resume:
+                            context.startActivity(new Intent(context, UserInfoActivity.class));
+                            break;
                         case R.drawable.link:
                             context.startActivity(new Intent(context, AddDeviceActivity.class));
                             break;
                         case R.drawable.share:
+                            context.startActivity(new Intent(context, ShareActivity.class));
                             break;
                         case R.drawable.logout:
                             FirebaseAuth.getInstance().signOut();

@@ -4,6 +4,7 @@ public class UserInformationBean {
     String nickname;
     String uid;
     String email;
+    String photo;
 
     public UserInformationBean() {
     }
@@ -12,6 +13,17 @@ public class UserInformationBean {
         this.nickname = nickname;
         this.uid = uid;
         this.email = email;
+    }
+
+    public UserInformationBean(String nickname, String uid, String email, String photo) {
+        this.nickname = nickname;
+        this.uid = uid;
+        this.email = email;
+        this.photo = photo;
+    }
+
+    public UserInformationBean(String photo) {
+        this.photo = photo;
     }
 
     public String getNickname() {
@@ -36,5 +48,13 @@ public class UserInformationBean {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

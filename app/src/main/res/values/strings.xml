@@ -5,6 +5,11 @@
     <string name="title_store">Store</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_menu">Menu</string>
+    <string name="about_me">關於我</string>
+    <string name="register_new_account">註冊會員</string>
+    <string name="login">登入</string>
+    <string name="add_device">新增裝置</string>
+    <string name="share_setter">共享設置</string>
 
     <!--device type-->
     <integer name="device_usb">1</integer>

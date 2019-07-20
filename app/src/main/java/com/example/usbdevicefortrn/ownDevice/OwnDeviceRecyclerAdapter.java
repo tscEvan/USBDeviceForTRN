@@ -1,12 +1,11 @@
 package com.example.usbdevicefortrn.ownDevice;
 
-import android.bluetooth.BluetoothA2dp;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,16 +16,13 @@ import android.widget.TextView;
 import com.example.usbdevicefortrn.R;
 import com.example.usbdevicefortrn.chaos.BluetoothSender;
 import com.example.usbdevicefortrn.chaos.HenonMap;
-import com.example.usbdevicefortrn.chaos.TRNFunction;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.List;
 
 public class OwnDeviceRecyclerAdapter extends RecyclerView.Adapter<OwnDeviceRecyclerAdapter.DeviceViewHolder> {
     private static final String TAG = OwnDeviceRecyclerAdapter.class.getSimpleName();
