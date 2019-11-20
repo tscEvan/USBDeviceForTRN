@@ -62,11 +62,13 @@ public class HenonMap {
         j2 = -(ax3 * dx2) / ax2 + dx3;
 
         u1 = (x2 * x2 * g1) + (x2 * g2) + (x3 * g3) + (x1 * c1 * h1) + x2 * c2 * j1 - x1 * A - x2 * c1 * A - x3 * c2 * A;
+        u2 = -(y2 * y2) * g1 - y2 * g2 - y3 * g3 - y1 * c1 * h1 - y2 * c2 * j1 + y1 * A + y2 * c1 * A + y3 * c2 * A;
+
         x1s = g1 * x2 * x2 + g2 * x2 + g3 * x3 + g4;
         x2s = h1 * x1 + h2;
         x3s = j1 * x2 + j2;
 
-        u2 = -(y2 * y2) * g1 - y2 * g2 - y3 * g3 - y1 * c1 * h1 - y2 * c2 * j1 + y1 * A + y2 * c1 * A + y3 * c2 * A;
+
         y1s = g1 * y2 * y2 + g2 * y2 + g3 * y3 + g4 + u1 + u2;//
         y2s = h1 * y1 + h2;
         y3s = j1 * y2 + j2;

@@ -125,7 +125,7 @@ public class BluetoothSender {
                     if (bytes!=0) {
 //                        bytes = mInputStream.available();
                         check = mInputStream.read();
-//                        Log.d(TAG, "run: 2 ="+ bytes);
+                        Log.d(TAG, "run: 2 ="+ check);
 //                        bytes = mInputStream.read(buffer, 0, 8);
 //                        Log.d(TAG, "run: 3 ="+ bytes);
                         //getCheckState
